@@ -15,7 +15,7 @@ df.drop(columns='Unnamed: 0', inplace=True)
 df.dropna(inplace=True)
 df["translation"] = df.apply(lambda row: {"en": row["en"], "fa": row["fa"]}, axis=1)
 
-dataset = Dataset.from_pandas(df[:100])
+dataset = Dataset.from_pandas(df)
 dataset = dataset.train_test_split(test_size=0.1)
 
 checkpoint = "facebook/mbart-large-50-many-to-many-mmt"
@@ -80,13 +80,14 @@ model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 training_args = Seq2SeqTrainingArguments(
     output_dir=f"./../saved_model/facebook_finetuned",
     evaluation_strategy="epoch",
+    eval_steps=5,
     learning_rate=2e-5,
     per_device_train_batch_size=8,
     per_device_eval_batch_size=8,
    # auto_find_batch_size=True,
     weight_decay=0.01,
     save_total_limit=3,
-    num_train_epochs=20,
+    num_train_epochs=50,
     predict_with_generate=True,
     fp16=True,
     save_strategy="epoch",
