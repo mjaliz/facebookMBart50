@@ -22,14 +22,14 @@ checkpoint = "facebook/mbart-large-50-many-to-many-mmt"
 # checkpoint = "t5-small"
 tokenizer = AutoTokenizer.from_pretrained(
     checkpoint,
-    cache_dir="/home/mrph/.cache/huggingface/hub/models--facebook--mbart-large-50-many-to-many-mmt",
     src_lang="en_XX",
     tgt_lang="fa_IR")
+
 source_lang = "en"
 target_lang = "fa"
-prefix = "translate English to Farsi: "
 
-print(tokenizer.eos_token)
+# prefix = "translate English to Farsi: "
+
 
 
 def preprocess_fn(examples):

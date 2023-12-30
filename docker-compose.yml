@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  mbartTrainer:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: mBart50
+    working_dir: /app/src
+    volumes:
+      - ./src:/app/src
+    command: python3 trainer.py
+    restart: always
