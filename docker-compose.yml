@@ -8,5 +8,13 @@ services:
     working_dir: /app/src
     volumes:
       - ./src:/app/src
+      - ./saved_model:/app/saved_model
     command: python3 trainer.py
     restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

@@ -1,5 +1,12 @@
-FROM python:3.10.12
+FROM translation
 
-COPY requirements.txt ./app
+COPY . /app
 
-RUN pip install -r ./app/requirements.txt
+#RUN pip install torch
+#RUN pip install numpy
+#RUN pip install sentencepiece
+#RUN pip install datasets
+#RUN pip install sacrebleu
+#RUN pip install evaluate
+#RUN pip install accelerate
+#RUN pip install protobuf
