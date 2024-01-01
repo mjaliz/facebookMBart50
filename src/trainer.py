@@ -78,9 +78,10 @@ def compute_metrics(eval_preds):
 model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 
 training_args = Seq2SeqTrainingArguments(
+    resume_from_checkpoint=True,
     output_dir=f"./../saved_model/facebook_finetuned",
-    evaluation_strategy="epoch",
-    eval_steps=5,
+    evaluation_strategy="steps",
+    eval_steps=6000,
     learning_rate=2e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
@@ -92,7 +93,7 @@ training_args = Seq2SeqTrainingArguments(
     fp16=True,
     save_strategy="epoch",
     save_steps=1,
-    load_best_model_at_end=True,
+    # load_best_model_at_end=True,
     push_to_hub=False,
 )
 
