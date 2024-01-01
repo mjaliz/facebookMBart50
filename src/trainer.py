@@ -33,10 +33,10 @@ target_lang = "fa"
 
 
 def preprocess_fn(examples):
-    inputs = ["en_XX " + example[source_lang] + f" {tokenizer.eos_token}" for example in examples["translation"]]
-    targets = ["fa_IR " + example[target_lang] + f" {tokenizer.eos_token}" for example in examples["translation"]]
-    # inputs = [example[source_lang] for example in examples["translation"]]
-    # targets = [example[target_lang] for example in examples["translation"]]
+   # inputs = ["en_XX " + example[source_lang] + f" {tokenizer.eos_token}" for example in examples["translation"]]
+   # targets = ["fa_IR " + example[target_lang] + f" {tokenizer.eos_token}" for example in examples["translation"]]
+    inputs = [example[source_lang] for example in examples["translation"]]
+    targets = [example[target_lang] for example in examples["translation"]]
     model_inputs = tokenizer(inputs, text_target=targets, max_length=128, padding=True, return_tensors="pt")
     return model_inputs
 
@@ -82,8 +82,8 @@ training_args = Seq2SeqTrainingArguments(
     evaluation_strategy="epoch",
     eval_steps=5,
     learning_rate=2e-5,
-    per_device_train_batch_size=8,
-    per_device_eval_batch_size=8,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
    # auto_find_batch_size=True,
     weight_decay=0.01,
     save_total_limit=3,
