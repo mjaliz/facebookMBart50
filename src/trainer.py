@@ -19,7 +19,6 @@ dataset = Dataset.from_pandas(df)
 dataset = dataset.train_test_split(test_size=0.1)
 
 checkpoint = "facebook/mbart-large-50-many-to-many-mmt"
-# checkpoint = "t5-small"
 tokenizer = AutoTokenizer.from_pretrained(
     checkpoint,
     src_lang="en_XX",
@@ -28,13 +27,8 @@ tokenizer = AutoTokenizer.from_pretrained(
 source_lang = "en"
 target_lang = "fa"
 
-# prefix = "translate English to Farsi: "
-
-
 
 def preprocess_fn(examples):
-   # inputs = ["en_XX " + example[source_lang] + f" {tokenizer.eos_token}" for example in examples["translation"]]
-   # targets = ["fa_IR " + example[target_lang] + f" {tokenizer.eos_token}" for example in examples["translation"]]
     inputs = [example[source_lang] for example in examples["translation"]]
     targets = [example[target_lang] for example in examples["translation"]]
     model_inputs = tokenizer(inputs, text_target=targets, max_length=128, padding=True, return_tensors="pt")
@@ -78,14 +72,12 @@ def compute_metrics(eval_preds):
 model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 
 training_args = Seq2SeqTrainingArguments(
-    resume_from_checkpoint=True,
     output_dir=f"./../saved_model/facebook_finetuned",
     evaluation_strategy="steps",
     eval_steps=6000,
     learning_rate=2e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
-   # auto_find_batch_size=True,
     weight_decay=0.01,
     save_total_limit=3,
     num_train_epochs=50,
@@ -93,7 +85,6 @@ training_args = Seq2SeqTrainingArguments(
     fp16=True,
     save_strategy="epoch",
     save_steps=1,
-    # load_best_model_at_end=True,
     push_to_hub=False,
 )
 
