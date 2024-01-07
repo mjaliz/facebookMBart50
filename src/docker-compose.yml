@@ -1,15 +1,12 @@
 version: "3.7"
 services:
-  mbarttrainer:
+  streamlit:
     build:
       dockerfile: Dockerfile
       context: .
-    container_name: mBart50
+    container_name: streamlit
     working_dir: /app/src
-    volumes:
-      - ./src:/app/src
-      - ./saved_model:/app/saved_model
-    command: python3 trainer.py
+    command: streamlit run streamlit_demo.py --server.port 8502
     restart: always
     deploy:
       resources:
@@ -18,4 +15,3 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [ gpu ]
-
