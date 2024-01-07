@@ -17,4 +17,20 @@ services:
           devices:
             - driver: nvidia
               count: 1
-              capabilities: [gpu]
+              capabilities: [ gpu ]
+
+  streamlit:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: streamlit
+    working_dir: /app/src
+    command: streamlit run streamlit_demo.py --server.port 8502
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
