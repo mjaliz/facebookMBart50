@@ -6,6 +6,9 @@ services:
       context: .
     container_name: streamlit
     working_dir: /app/src
+    volumes:
+      - ./src:/app/src
+      - ./saved_model:/app/saved_model
     command: streamlit run streamlit_demo.py --server.port 8502
     restart: always
     deploy:
