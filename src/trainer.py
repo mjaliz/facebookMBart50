@@ -16,9 +16,10 @@ df.dropna(inplace=True)
 df["translation"] = df.apply(lambda row: {"en": row["en"], "fa": row["fa"]}, axis=1)
 
 dataset = Dataset.from_pandas(df)
-dataset = dataset.train_test_split(test_size=0.1)
+dataset = dataset.train_test_split(test_size=0.01)
 
 checkpoint = "facebook/mbart-large-50-many-to-many-mmt"
+#checkpoint = "/app/saved_model/facebook_finetuned/checkpoint-229860"
 tokenizer = AutoTokenizer.from_pretrained(
     checkpoint,
     src_lang="en_XX",
@@ -74,7 +75,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(checkpoint)
 training_args = Seq2SeqTrainingArguments(
     output_dir=f"./../saved_model/facebook_finetuned",
     evaluation_strategy="steps",
-    eval_steps=6000,
+    eval_steps=10000,
     learning_rate=2e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
