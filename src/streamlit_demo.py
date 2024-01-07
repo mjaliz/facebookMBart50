@@ -9,17 +9,27 @@ saved_model_path = os.path.join(dir_path, '..', 'saved_model')
 model_checkpoint_paths = os.listdir(saved_model_path)
 model_checkpoint_paths = [os.path.basename(path) for path in model_checkpoint_paths]
 
-st.title('Machine Translation mBart50')
-option = st.selectbox("Model checkpoint", model_checkpoint_paths)
+if 'model' not in st.session_state:
+    st.session_state['model'] = None
 
-model_path = os.path.join(saved_model_path, option)
-model = Inference(model_path)
+
+def set_model():
+    selected_option = st.session_state['checkpoint']
+    if selected_option is not None:
+        model_path = os.path.join(saved_model_path, selected_option)
+        model = Inference(model_path)
+        st.session_state.model = model
+
+
+st.title('Machine Translation mBart50')
+option = st.selectbox("Model checkpoint", model_checkpoint_paths, index=None, placeholder="Select a checkpoint",
+                      on_change=set_model, key='checkpoint')
 
 src_text = st.text_input(label="Sentence")
 
-btn_disabled = True if src_text == "" else False
+btn_disabled = True if src_text == "" or option is None else False
 
 if st.button(label="Translate", disabled=btn_disabled):
     with st.spinner(""):
-        translation_text = model.translate(src_text)
+        translation_text = st.session_state.model.translate(src_text)
     st.success(translation_text)
