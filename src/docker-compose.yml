@@ -9,7 +9,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./saved_model:/app/saved_model
-    command: streamlit run streamlit_demo.py --server.port 8502
+    command: streamlit run ./streamlit_demo.py --server.port 8502
     restart: always
     deploy:
       resources:
