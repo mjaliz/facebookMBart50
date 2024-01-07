@@ -18,8 +18,8 @@ df["translation"] = df.apply(lambda row: {"en": row["en"], "fa": row["fa"]}, axi
 dataset = Dataset.from_pandas(df)
 dataset = dataset.train_test_split(test_size=0.01)
 
-checkpoint = "facebook/mbart-large-50-many-to-many-mmt"
-#checkpoint = "/app/saved_model/facebook_finetuned/checkpoint-229860"
+# checkpoint = "facebook/mbart-large-50-many-to-many-mmt"
+checkpoint = "/app/saved_model/facebook_finetuned/checkpoint-884954"
 tokenizer = AutoTokenizer.from_pretrained(
     checkpoint,
     src_lang="en_XX",
@@ -80,7 +80,7 @@ training_args = Seq2SeqTrainingArguments(
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
     weight_decay=0.01,
-    save_total_limit=3,
+    save_total_limit=50,
     num_train_epochs=50,
     predict_with_generate=True,
     fp16=True,

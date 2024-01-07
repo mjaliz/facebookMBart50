@@ -28,7 +28,7 @@ st.title('Machine Translation mBart50')
 option = st.selectbox("Model checkpoint", model_checkpoint_paths, index=None, placeholder="Select a checkpoint",
                       on_change=set_model, key='checkpoint')
 
-src_text = st.text_input(label="Sentence")
+src_text = st.text_area(label="Sentence", height=200)
 
 btn_disabled = True if src_text == "" or option is None else False
 
