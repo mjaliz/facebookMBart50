@@ -9,7 +9,8 @@ saved_model_path = os.path.join(dir_path, '..', 'saved_model', 'facebook_finetun
 model_checkpoint_paths = sorted(os.listdir(saved_model_path))
 model_checkpoint_paths = [path for path in model_checkpoint_paths if
                           os.path.isdir(os.path.join(saved_model_path, path))]
-model_checkpoint_paths = [os.path.basename(path) for path in model_checkpoint_paths]
+model_checkpoint_paths = [os.path.basename(path) for path in model_checkpoint_paths if
+                          os.path.basename(path).startswith("checkpoint")]
 
 if 'model' not in st.session_state:
     st.session_state['model'] = None
