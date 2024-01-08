@@ -4,7 +4,7 @@ import streamlit as st
 from inference import Inference
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-saved_model_path = os.path.join(dir_path, '..', 'saved_model')
+saved_model_path = os.path.join(dir_path, '..', 'saved_model', "facebook_finetuned")
 
 model_checkpoint_paths = sorted([os.path.join(saved_model_path, path) for path in os.listdir(saved_model_path)],
                                 key=os.path.getmtime)
