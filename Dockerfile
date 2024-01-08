@@ -3,6 +3,7 @@ FROM translation
 COPY . /app
 
 RUN pip install streamlit
+RUN pip install beautifulsoup4
 #RUN pip install numpy
 #RUN pip install sentencepiece
 #RUN pip install datasets

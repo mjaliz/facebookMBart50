@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  fastdict_scraper:
+    build:
+      dockerfile: ./../Dockerfile
+      context: .
+    container_name: fastdict_scraper
+    working_dir: /app/src
+    volumes:
+      - ./:/app/src
+      - ./../data:/app/data
+    command: python ./fast_dict_scrapper.py
+    restart: always
